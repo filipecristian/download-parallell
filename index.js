@@ -20,9 +20,9 @@ const list = [
 const maxPool = 4;
 
 
-function sleep(ms) {
+async function sleep(ms) {
     // add ms millisecond timeout before promise resolution
-    return new Promise(resolve => setTimeout(resolve, ms))
+    return new Promise(resolve => setTimeout(resolve(ms), ms));
 }
 
 
@@ -106,7 +106,11 @@ async function downloadAll(openConnection, saveDownload, list, maxPool) {
         
         await new Promise(r => setTimeout(r, 500));
     }
-}
+}    
 
 
-downloadAll(openConnection, saveDownload, list, maxPool);
+
+//downloadAll(openConnection, saveDownload, list, maxPool);
+
+
+module.exports = { sleep, list };
