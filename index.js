@@ -71,21 +71,22 @@ async function downloadAll(openConnection, saveDownload, list, maxPool) {
             if (control[i] !== undefined) {
                 if (control[i].hasOwnProperty('reserved') == false) {
                     control[i].reserved = true;
-                    console.log(`abrindo conexão com ${control[i].url}`);
+                    //console.log(`abrindo conexão com ${control[i].url}`);
                     openConnection(control[i].url).then((content) => {
+                        //console.log('entrou aqui');
                         let user = control[i].url.split('/')[4];
                         let fileName = `user_${user}.json`;
                         let path = `./downloads/${fileName}`;
                         saveDownload(path, content).then(() => {
-                            console.log(`Download finalizado ${control[i].url}`);
+                            //console.log(`Download finalizado ${control[i].url}`);
                             delete control[i];
                         });
                     });
                 } else {
-                    console.log('pool ' + i + ' is in use. processing ' + control[i].url);
+                    //console.log('pool ' + i + ' is in use. processing ' + control[i].url);
                 }
             } else {    
-                console.log('pool ' + i + ' is free.');    
+                //console.log('pool ' + i + ' is free.');    
                 control[i] = list[index];
                 index++;
 
@@ -98,7 +99,7 @@ async function downloadAll(openConnection, saveDownload, list, maxPool) {
                 }
                 
                 if (stop) {
-                    console.log('Closing because all pool are free!');
+                    //console.log('Closing because all pool are free!');
                     return;
                 }
             }
@@ -113,4 +114,4 @@ async function downloadAll(openConnection, saveDownload, list, maxPool) {
 //downloadAll(openConnection, saveDownload, list, maxPool);
 
 
-module.exports = { sleep, list };
+module.exports = { sleep, list, downloadAll };
